@@ -6,6 +6,84 @@
 bool restart = false;
 //#include"Header.h"
 using namespace sf;
+int intpirog = 10;
+
+
+void game_run()
+{
+
+
+	RenderWindow window(VideoMode(800, 600), "SFML Jumping herosprite");
+
+	Texture herotexture;
+	herotexture.loadFromFile("imag/hiro.png");
+	Sprite herosprite;
+	herosprite.setTexture(herotexture);
+	herosprite.scale(0.15f, 0.15f);
+	herosprite.setPosition(50, 450); //выводим спрайт в позицию x y 
+
+	Image map_image;//объект изображения для карты
+	map_image.loadFromFile("imag/pole.png");//загружаем файл для карты
+	Texture map;//текстура карты
+	map.loadFromImage(map_image);//заряжаем текстуру картинкой
+	Sprite s_map;//создаём спрайт для карты
+	s_map.setTexture(map);//заливаем текстуру спрайтом
+	s_map.scale(0.6f, 0.6f);
+	s_map.setPosition(0, 0);
+
+	Image popt_image;
+	popt_image.loadFromFile("imag/popt.png");
+	Texture popt;
+	popt.loadFromImage(popt_image);
+	Sprite s_popt;
+	s_popt.setTexture(popt);
+	s_popt.scale(0.03f, 0.03f);
+	s_popt.setPosition(800, 550);
+
+	Sprite s_popt1;
+	s_popt1 = s_popt;
+	s_popt1.setPosition(-150, 550);
+
+	Image spin_image;
+	spin_image.loadFromFile("imag/spin.png");
+	Texture spin;
+	spin.loadFromImage(spin_image);
+	Sprite s_spin;
+	s_spin.setTexture(spin);
+	s_spin.scale(0.06f, 0.06f);
+	s_spin.setPosition(400, 400);
+
+
+	Image pirog_image;
+	pirog_image.loadFromFile("imag/pirog.png");
+	Texture pirog;
+	pirog.loadFromImage(pirog_image);
+	Sprite s_pirog;
+	s_pirog.setTexture(pirog);
+	s_pirog.scale(0.05f, 0.05f);
+	s_pirog.setPosition(2400, 550);
+
+	Image bus_image;
+	bus_image.loadFromFile("imag/bus.png");
+	Texture bus;
+	bus.loadFromImage(bus_image);
+	Sprite s_bus;
+	s_bus.setTexture(bus);
+	s_bus.scale(0.03f, 0.03f);
+	s_bus.setPosition(650, 280);
+
+	Image end_image;
+	end_image.loadFromFile("imag/end.jpg");
+	Texture end;
+	end.loadFromImage(end_image);
+	Sprite s_end;
+	s_end.setTexture(end);
+	s_end.scale(0.7f, 0.7f);
+	s_end.setPosition(250, 130);
+
+	
+}
+
 
 void menu()
 {
