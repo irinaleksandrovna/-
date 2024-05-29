@@ -120,6 +120,216 @@ void game_run()
 	win.setCharacterSize(50);
 	win.setFillColor(Color::White);
 	win.setPosition(300, 150);
+
+	while (window.isOpen())
+	{
+		count++;
+		if (count >= 2000)
+		{
+			count = 0;
+			s_poptSpeed += 0.01f;
+			s_spinSpeed += 0.01f;
+		}
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+			{
+				window.close();
+			}
+			if ((Keyboard::isKeyPressed(Keyboard::Space)) && !isJumping && !isGameOver)
+			{
+				isJumping = true;
+			}
+		}
+		if (isJumping)
+		{
+			herosprite.move(0, -0.5f);
+			jumpHeight -= 0.5f;
+			if (jumpHeight <= 0)
+			{
+				isJumping = false;
+				jumpHeight = 0.0f;
+			}
+		}
+		else if (jumpHeight < 200)
+		{
+			herosprite.move(0, 0.5f);
+			jumpHeight += 0.5f;
+		}
+
+		s_popt.move(-s_poptSpeed, 0);
+		if (s_popt.getPosition().x < -50)
+		{
+			s_popt.setPosition(800, 550);
+		}
+
+		s_popt1.move(-s_poptSpeed, 0);
+		if (s_popt1.getPosition().x < -1700)
+		{
+			s_popt1.setPosition(800, 550);
+		}
+		s_pirog.move(-s_poptSpeed, 0);
+		if (s_pirog.getPosition().x < -2400)
+		{
+			s_pirog.setPosition(800, 550);
+		}
+
+		float herospriteRight = herosprite.getPosition().x + 40.0f;
+		float s_pirogRight = s_pirog.getPosition().x + 15.0f;
+
+		if (herospriteRight > s_pirog.getPosition().x
+			&& herosprite.getPosition().x < s_pirogRight
+			&& herosprite.getPosition().y < s_pirog.getPosition().y + s_pirog.getGlobalBounds().height
+			&& herosprite.getPosition().y + herosprite.getGlobalBounds().height > s_pirog.getPosition().y
+			&& !isJumping)
+		{
+			Game = true;
+		}
+		else if (Game)
+		{
+			Game = false;
+			s_pirog.setPosition(2440, 550);
+			put++;
+		}
+
+		herospriteRight = herosprite.getPosition().x + 40.0f;
+		float s_poptRight = s_popt.getPosition().x + 15.0f;
+
+		if (herospriteRight > s_popt.getPosition().x
+			&& herosprite.getPosition().x < s_poptRight
+			&& herosprite.getPosition().y < s_popt.getPosition().y + s_popt.getGlobalBounds().height
+			&& herosprite.getPosition().y + herosprite.getGlobalBounds().height > s_popt.getPosition().y
+			&& !isJumping)
+		{
+			isGameOver = true;
+		}
+
+
+		s_spin.move(-s_spinSpeed, 0);
+		if (s_spin.getPosition().x < -900)
+		{
+			s_spin.setPosition(900, 350 + 50 * (pow((-1), rand() % 3)));
+		}
+		if ((s_spin.getPosition().x < s_popt.getPosition().x - 50 && s_spin.getPosition().x + 60 >  s_popt.getPosition().x))
+		{
+			s_spin.move(-100, 0);
+		}
+		if ((s_spin.getPosition().x < s_popt1.getPosition().x - 50 && s_spin.getPosition().x + 60 >  s_popt1.getPosition().x))
+		{
+			s_spin.move(-100, 0);
+		}
+
+		herospriteRight = herosprite.getPosition().x + 40.0f;
+		float s_spinRight = s_spin.getPosition().x + 15.0f;
+
+		if (herospriteRight > s_spin.getPosition().x
+			&& herosprite.getPosition().x < s_spinRight
+			&& herosprite.getPosition().y < s_spin.getPosition().y + s_spin.getGlobalBounds().height
+			&& herosprite.getPosition().y + herosprite.getGlobalBounds().height > s_spin.getPosition().y
+			&& isJumping)
+		{
+			isGameOver = true;
+		}
+
+		if (!timerStarted)
+		{
+			timerStarted = true;
+			clock.restart(); // Начать отсчет времени при старте игры
+		}
+
+		// Обновление времени после запуска игры
+		seconds = static_cast<int>(clock.getElapsedTime().asSeconds());
+
+		// Отображение времени на экране
+		Text timerText;
+		timerText.setFont(font);
+		timerText.setCharacterSize(40);
+		timerText.setFillColor(Color::White);
+		timerText.setPosition(10, 10);
+		timerText.setString("time: " + std::to_string(seconds));
+
+		count_pirog.setFont(font);
+		count_pirog.setCharacterSize(40);
+		count_pirog.setFillColor(Color::White);
+		count_pirog.setPosition(550, 10);
+		count_pirog.setString("points: " + std::to_string(put));
+
+		window.clear();
+		window.draw(s_map);
+		if (run && put < intpirog) {
+
+			window.draw(s_popt1);
+			if (s_popt.getPosition().x != s_pirog.getPosition().x)
+			{
+				window.draw(s_popt);
+			}
+
+			window.draw(s_pirog);
+			if (((s_popt.getPosition().x + 40.0f > s_spin.getPosition().x) && (s_popt.getPosition().x - 40.0f > s_spin.getPosition().x))
+				|| ((s_popt.getPosition().x + 40 < s_spin.getPosition().x) && (s_popt.getPosition().x - 40 < s_spin.getPosition().x)))
+			{
+				window.draw(s_spin);
+			}
+			window.draw(timerText);
+			window.draw(count_pirog);
+		}
+
+		if (put >= intpirog)
+		{
+			s_bus.move(-s_busSpeed, s_busSpeed / 2);
+			window.draw(win);
+			window.draw(s_bus);
+			if (s_bus.getPosition().y > 400.0f)
+			{
+				s_busSpeed = 0.0f;
+				isGameEnd = true;
+			}
+		}
+		if (isGameEnd)
+		{
+			herosprite.move(0.15f, 0);
+		}
+		if (herosprite.getPosition().x < s_bus.getPosition().x - 30.0f)
+		{
+			window.draw(herosprite);
+		}
+		else {
+			if (event.type == Event::MouseButtonPressed) {
+				if (event.mouseButton.button == Mouse::Left) {
+					Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
+					if (button.getGlobalBounds().contains(mousePos)) {
+						restart = true;
+						buttonText.setString("Restart!");
+						window.close();
+					}
+				}
+			}
+			window.draw(button);
+			window.draw(buttonText);
+		}
+		if (isGameOver && put < intpirog)
+		{
+			window.draw(s_end);
+			run = false;
+			if (event.type == Event::MouseButtonPressed) {
+				if (event.mouseButton.button == Mouse::Left) {
+					Vector2f mousePos = window.mapPixelToCoords(Mouse::getPosition(window));
+					if (button.getGlobalBounds().contains(mousePos)) {
+						restart = true;
+						buttonText.setString("Restart!");
+						window.close();
+					}
+				}
+			}
+			window.draw(button);
+			window.draw(buttonText);
+		}
+
+
+		window.display();
+	}
+
 	
 }
 
