@@ -140,7 +140,7 @@ void menu()
 	int a;
 	Text rules;
 	rules.setFont(font);
-	//rules.setString("Rules of the game:\n jump over pop its not to touch spinners\n collect pies.\n By collecting "+ std::to_string(intpirog)+ " pies you win");
+	rules.setString("Rules of the game:\n jump over pop its not to touch spinners\n collect pies.\n By collecting "+ std::to_string(intpirog)+ " pies you win");
 	rules.setCharacterSize(24);
 	rules.setFillColor(Color::White);
 	rules.setPosition(100, 200);
@@ -174,7 +174,7 @@ void menu()
 					{
 						std::cout << "Начало игры!\n";
 						window.close();
-						//game_run();
+						game_run();
 					}
 				}
 			}
