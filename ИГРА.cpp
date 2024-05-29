@@ -20,7 +20,7 @@ void menu()
 	title.setCharacterSize(40);
 	title.setFillColor(Color::White);
 	title.setPosition(280, 100);
-
+	int a;
 	Text rules;
 	rules.setFont(font);
 	//rules.setString("Rules of the game:\n jump over pop its not to touch spinners\n collect pies.\n By collecting "+ std::to_string(intpirog)+ " pies you win");
