@@ -80,7 +80,46 @@ void game_run()
 	s_end.setTexture(end);
 	s_end.scale(0.7f, 0.7f);
 	s_end.setPosition(250, 130);
+	float s_poptSpeed = 0.3f;
+	float s_spinSpeed = 0.3f;
+	float s_busSpeed = 0.05f;
+	bool isJumping = false;
+	float jumpHeight = 200.0f;
+	bool isGameOver = false;
+	bool run = true;
+	int count = 0;
 
+	bool isGameEnd = false;
+
+	bool timerStarted = false;
+	Clock clock;
+	Text timerText;
+	Font font;
+	font.loadFromFile("srift.ttf");
+	timerText.setFont(font);
+	int seconds = 0;
+
+	Text count_pirog;
+	count_pirog.setFont(font);
+	bool Game = false;
+	int put = 0;
+
+	Text buttonText;
+	buttonText.setFont(font);
+	buttonText.setString("press the button to restart");
+	buttonText.setCharacterSize(30);
+	buttonText.setFillColor(Color::White);
+	buttonText.setPosition(10, 10);
+	RectangleShape button(Vector2f(50, 50));
+	button.setPosition(window.getSize().x - 60, window.getSize().y - 60);
+	button.setFillColor(Color::White);
+
+	Text win;
+	win.setFont(font);
+	win.setString("YOU WIN!!!");
+	win.setCharacterSize(50);
+	win.setFillColor(Color::White);
+	win.setPosition(300, 150);
 	
 }
 
