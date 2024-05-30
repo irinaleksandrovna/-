@@ -81,7 +81,7 @@ void game_run()
 	s_end.scale(0.7f, 0.7f);
 	s_end.setPosition(250, 130);
 	float s_poptSpeed = 0.3f;
-	float s_spinSpeed = 0.3f;
+	float s_spinSpeed = 0.35f;
 	float s_busSpeed = 0.05f;
 	bool isJumping = false;
 	float jumpHeight = 200.0f;
@@ -209,15 +209,23 @@ void game_run()
 		s_spin.move(-s_spinSpeed, 0);
 		if (s_spin.getPosition().x < -900)
 		{
-			s_spin.setPosition(900, 350 + 50 * (pow((-1), rand() % 3)));
+			s_spin.setPosition(900, 300 + 50 * (pow((-1), rand() % 3)));
 		}
-		if ((s_spin.getPosition().x < s_popt.getPosition().x - 50 && s_spin.getPosition().x + 60 >  s_popt.getPosition().x))
+		if ((s_spin.getPosition().x > s_popt.getPosition().x && s_spin.getPosition().x - 100 <  s_popt.getPosition().x))
 		{
-			s_spin.move(-100, 0);
+			s_spin.move(-1, 0);
 		}
-		if ((s_spin.getPosition().x < s_popt1.getPosition().x - 50 && s_spin.getPosition().x + 60 >  s_popt1.getPosition().x))
+		if ((s_spin.getPosition().x < s_popt.getPosition().x && s_spin.getPosition().x + 100 >  s_popt.getPosition().x))
 		{
-			s_spin.move(-100, 0);
+			s_spin.move(1, 0);
+		}
+		if ((s_spin.getPosition().x > s_popt1.getPosition().x && s_spin.getPosition().x - 100 < s_popt1.getPosition().x))
+		{
+			s_spin.move(-1, 0);
+		}
+		if ((s_spin.getPosition().x < s_popt1.getPosition().x && s_spin.getPosition().x + 100 > s_popt1.getPosition().x))
+		{
+			s_spin.move(1, 0);
 		}
 
 		herospriteRight = herosprite.getPosition().x + 40.0f;
