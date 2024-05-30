@@ -121,14 +121,17 @@ void game_run()
 	win.setFillColor(Color::White);
 	win.setPosition(300, 150);
 
+	int speed = 0;
 	while (window.isOpen())
 	{
 		count++;
-		if (count >= 2000)
+		if (count >= 1000)
 		{
 			count = 0;
+			
 			s_poptSpeed += 0.01f;
 			s_spinSpeed += 0.01f;
+			speed += 0.0f;
 		}
 		Event event;
 		while (window.pollEvent(event))
@@ -144,18 +147,18 @@ void game_run()
 		}
 		if (isJumping)
 		{
-			herosprite.move(0, -0.5f);
-			jumpHeight -= 0.5f;
+			herosprite.move(0, -0.5f- speed);
+			jumpHeight -= 0.5f- speed;
 			if (jumpHeight <= 0)
 			{
 				isJumping = false;
 				jumpHeight = 0.0f;
 			}
 		}
-		else if (jumpHeight < 200)
+		else if (jumpHeight < 180)
 		{
-			herosprite.move(0, 0.5f);
-			jumpHeight += 0.5f;
+			herosprite.move(0, 0.5f+ speed);
+			jumpHeight += 0.5f+ speed;
 		}
 
 		s_popt.move(-s_poptSpeed, 0);
@@ -213,19 +216,19 @@ void game_run()
 		}
 		if ((s_spin.getPosition().x > s_popt.getPosition().x && s_spin.getPosition().x - 100 <  s_popt.getPosition().x))
 		{
-			s_spin.move(-1, 0);
+			s_spin.move(-1-speed, 0);
 		}
 		if ((s_spin.getPosition().x < s_popt.getPosition().x && s_spin.getPosition().x + 100 >  s_popt.getPosition().x))
 		{
-			s_spin.move(1, 0);
+			s_spin.move(-1 - speed, 0);
 		}
 		if ((s_spin.getPosition().x > s_popt1.getPosition().x && s_spin.getPosition().x - 100 < s_popt1.getPosition().x))
 		{
-			s_spin.move(-1, 0);
+			s_spin.move(-1 - speed, 0);
 		}
 		if ((s_spin.getPosition().x < s_popt1.getPosition().x && s_spin.getPosition().x + 100 > s_popt1.getPosition().x))
 		{
-			s_spin.move(1, 0);
+			s_spin.move(-1 - speed, 0);
 		}
 
 		herospriteRight = herosprite.getPosition().x + 40.0f;
@@ -274,10 +277,22 @@ void game_run()
 			}
 
 			window.draw(s_pirog);
-			if (((s_popt.getPosition().x + 40.0f > s_spin.getPosition().x) && (s_popt.getPosition().x - 40.0f > s_spin.getPosition().x))
-				|| ((s_popt.getPosition().x + 40 < s_spin.getPosition().x) && (s_popt.getPosition().x - 40 < s_spin.getPosition().x)))
+			window.draw(s_spin);
+			if ((s_pirog.getPosition().x > s_popt.getPosition().x && s_pirog.getPosition().x - 50 < s_popt.getPosition().x))
 			{
-				window.draw(s_spin);
+				s_pirog.move(-3-speed, 0);
+			}
+			if ((s_pirog.getPosition().x < s_popt.getPosition().x && s_pirog.getPosition().x + 50 >  s_popt.getPosition().x))
+			{
+				s_pirog.move(-3-speed, 0);
+			}
+			if ((s_pirog.getPosition().x > s_popt1.getPosition().x && s_pirog.getPosition().x - 50 < s_popt1.getPosition().x))
+			{
+				s_pirog.move(-3-speed, 0);
+			}
+			if ((s_pirog.getPosition().x < s_popt1.getPosition().x && s_pirog.getPosition().x + 50 > s_popt1.getPosition().x))
+			{
+				s_pirog.move(-3- speed, 0);
 			}
 			window.draw(timerText);
 			window.draw(count_pirog);
