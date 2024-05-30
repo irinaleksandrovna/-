@@ -11,9 +11,9 @@ int intpirog = 10;
 
 void game_run()
 {
+	setlocale(LC_ALL, "Russian");
 
-
-	RenderWindow window(VideoMode(800, 600), "SFML Jumping herosprite");
+	RenderWindow window(VideoMode(800, 600), "GAME");
 
 	Texture herotexture;
 	herotexture.loadFromFile("imag/hiro.png");
@@ -38,11 +38,11 @@ void game_run()
 	Sprite s_popt;
 	s_popt.setTexture(popt);
 	s_popt.scale(0.03f, 0.03f);
-	s_popt.setPosition(800, 550);
+	s_popt.setPosition(800, 520);
 
 	Sprite s_popt1;
 	s_popt1 = s_popt;
-	s_popt1.setPosition(-150, 550);
+	s_popt1.setPosition(-150, 520);
 
 	Image spin_image;
 	spin_image.loadFromFile("imag/spin.png");
@@ -61,7 +61,7 @@ void game_run()
 	Sprite s_pirog;
 	s_pirog.setTexture(pirog);
 	s_pirog.scale(0.05f, 0.05f);
-	s_pirog.setPosition(2400, 550);
+	s_pirog.setPosition(2400, 520);
 
 	Image bus_image;
 	bus_image.loadFromFile("imag/bus.png");
@@ -125,13 +125,12 @@ void game_run()
 	while (window.isOpen())
 	{
 		count++;
-		if (count >= 1000)
+		if (count >= 1500)
 		{
 			count = 0;
-			
 			s_poptSpeed += 0.01f;
 			s_spinSpeed += 0.01f;
-			speed += 0.0f;
+			speed += 0.01f;
 		}
 		Event event;
 		while (window.pollEvent(event))
@@ -164,28 +163,27 @@ void game_run()
 		s_popt.move(-s_poptSpeed, 0);
 		if (s_popt.getPosition().x < -50)
 		{
-			s_popt.setPosition(800, 550);
+			s_popt.setPosition(800, 520);
 		}
 
 		s_popt1.move(-s_poptSpeed, 0);
 		if (s_popt1.getPosition().x < -1700)
 		{
-			s_popt1.setPosition(800, 550);
+			s_popt1.setPosition(800, 520);
 		}
 		s_pirog.move(-s_poptSpeed, 0);
 		if (s_pirog.getPosition().x < -2400)
 		{
-			s_pirog.setPosition(800, 550);
+			s_pirog.setPosition(800, 520);
 		}
 
-		float herospriteRight = herosprite.getPosition().x + 40.0f;
-		float s_pirogRight = s_pirog.getPosition().x + 15.0f;
+		float herospriteRight = herosprite.getPosition().x + 45.0f;
+		float s_pirogRight = s_pirog.getPosition().x + 20.0f;
 
 		if (herospriteRight > s_pirog.getPosition().x
 			&& herosprite.getPosition().x < s_pirogRight
 			&& herosprite.getPosition().y < s_pirog.getPosition().y + s_pirog.getGlobalBounds().height
-			&& herosprite.getPosition().y + herosprite.getGlobalBounds().height > s_pirog.getPosition().y
-			&& !isJumping)
+			&& herosprite.getPosition().y + herosprite.getGlobalBounds().height > s_pirog.getPosition().y)
 		{
 			Game = true;
 		}
@@ -209,14 +207,14 @@ void game_run()
 		}
 
 
-		s_spin.move(-s_spinSpeed, 0);
+		s_spin.move(-s_spinSpeed - speed, 0);
 		if (s_spin.getPosition().x < -900)
 		{
 			s_spin.setPosition(900, 300 + 50 * (pow((-1), rand() % 3)));
 		}
 		if ((s_spin.getPosition().x > s_popt.getPosition().x && s_spin.getPosition().x - 100 <  s_popt.getPosition().x))
 		{
-			s_spin.move(-1-speed, 0);
+			s_spin.move(-1 - speed, 0);
 		}
 		if ((s_spin.getPosition().x < s_popt.getPosition().x && s_spin.getPosition().x + 100 >  s_popt.getPosition().x))
 		{
@@ -237,8 +235,7 @@ void game_run()
 		if (herospriteRight > s_spin.getPosition().x
 			&& herosprite.getPosition().x < s_spinRight
 			&& herosprite.getPosition().y < s_spin.getPosition().y + s_spin.getGlobalBounds().height
-			&& herosprite.getPosition().y + herosprite.getGlobalBounds().height > s_spin.getPosition().y
-			&& isJumping)
+			&& herosprite.getPosition().y + herosprite.getGlobalBounds().height + 10 > s_spin.getPosition().y)
 		{
 			isGameOver = true;
 		}
@@ -359,7 +356,8 @@ void game_run()
 
 void menu()
 {
-	RenderWindow window(VideoMode(800, 600), "Заставка игры");
+	setlocale(LC_ALL, "Russian");
+	RenderWindow window(VideoMode(800, 600), "menu");
 
 	Font font;
 	font.loadFromFile("srift.ttf");
