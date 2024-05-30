@@ -123,7 +123,6 @@ void game_run()
 
 	Text AAA;
 	AAA.setFont(font);
-	AAA.setString("POINTS: "+ std::to_string(put));
 	AAA.setCharacterSize(40);
 	AAA.setFillColor(Color::White);
 	AAA.setPosition(50, 50);
@@ -338,6 +337,7 @@ void game_run()
 		if (isGameOver && put < intpirog)
 		{
 			window.draw(s_end);
+			AAA.setString("POINTS: " + std::to_string(put));
 			window.draw(AAA);
 			run = false;
 			if (event.type == Event::MouseButtonPressed) {
