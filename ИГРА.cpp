@@ -121,11 +121,18 @@ void game_run()
 	win.setFillColor(Color::White);
 	win.setPosition(300, 150);
 
+	Text AAA;
+	AAA.setFont(font);
+	AAA.setString("POINTS: "+ std::to_string(put));
+	AAA.setCharacterSize(40);
+	AAA.setFillColor(Color::White);
+	AAA.setPosition(50, 50);
+
 	int speed = 0;
 	while (window.isOpen())
 	{
 		count++;
-		if (count >= 1500)
+		if (count >= 2000)
 		{
 			count = 0;
 			s_poptSpeed += 0.01f;
@@ -212,17 +219,17 @@ void game_run()
 		{
 			s_spin.setPosition(900, 300 + 50 * (pow((-1), rand() % 3)));
 		}
-		if ((s_spin.getPosition().x > s_popt.getPosition().x && s_spin.getPosition().x - 100 <  s_popt.getPosition().x))
+		if ((s_spin.getPosition().x > s_popt.getPosition().x && s_spin.getPosition().x - 230 <  s_popt.getPosition().x))
 		{
-			s_spin.move(-1 - speed, 0);
+			s_spin.move(10, 0);
 		}
 		if ((s_spin.getPosition().x < s_popt.getPosition().x && s_spin.getPosition().x + 100 >  s_popt.getPosition().x))
 		{
 			s_spin.move(-1 - speed, 0);
 		}
-		if ((s_spin.getPosition().x > s_popt1.getPosition().x && s_spin.getPosition().x - 100 < s_popt1.getPosition().x))
+		if ((s_spin.getPosition().x > s_popt1.getPosition().x && s_spin.getPosition().x - 230 < s_popt1.getPosition().x))
 		{
-			s_spin.move(-1 - speed, 0);
+			s_spin.move(10, 0);
 		}
 		if ((s_spin.getPosition().x < s_popt1.getPosition().x && s_spin.getPosition().x + 100 > s_popt1.getPosition().x))
 		{
@@ -275,7 +282,7 @@ void game_run()
 
 			window.draw(s_pirog);
 			window.draw(s_spin);
-			if ((s_pirog.getPosition().x > s_popt.getPosition().x && s_pirog.getPosition().x - 50 < s_popt.getPosition().x))
+			if ((s_pirog.getPosition().x > s_popt.getPosition().x && s_pirog.getPosition().x - 80 < s_popt.getPosition().x))
 			{
 				s_pirog.move(-3-speed, 0);
 			}
@@ -283,7 +290,7 @@ void game_run()
 			{
 				s_pirog.move(-3-speed, 0);
 			}
-			if ((s_pirog.getPosition().x > s_popt1.getPosition().x && s_pirog.getPosition().x - 50 < s_popt1.getPosition().x))
+			if ((s_pirog.getPosition().x > s_popt1.getPosition().x && s_pirog.getPosition().x - 80 < s_popt1.getPosition().x))
 			{
 				s_pirog.move(-3-speed, 0);
 			}
@@ -331,6 +338,7 @@ void game_run()
 		if (isGameOver && put < intpirog)
 		{
 			window.draw(s_end);
+			window.draw(AAA);
 			run = false;
 			if (event.type == Event::MouseButtonPressed) {
 				if (event.mouseButton.button == Mouse::Left) {
